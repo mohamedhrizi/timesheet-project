@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: timesheetdb
+    ports:
+      - "3307:3306"
+
+  timesheet-app:
+    image: timesheet-mohamedhrizi-4nids2
+    container_name: timesheet-container
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/timesheetdb?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
